@@ -4,4 +4,4 @@ metadata:
   name: testrobert-binding
 spec:
   AzureIdentity: testrobert
-  Selector: app=appauthtest
+  Selector: appauthtest

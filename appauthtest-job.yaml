@@ -9,13 +9,13 @@ spec:
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 30 # must start in x seconds
   jobTemplate:
-    metadata:
-      labels:
-        app: appauthtest
     spec:
       ttlSecondsAfterFinished: 7200
       activeDeadlineSeconds: 1750 # must complete in x seconds
       template:
+        metadata:
+          labels:
+            aadpodidbinding: appauthtest
         spec:
           containers:
           - name: appauthtest
