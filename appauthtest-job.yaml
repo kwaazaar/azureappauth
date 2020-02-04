@@ -5,7 +5,7 @@ metadata:
   labels:
     app: appauthtest
 spec:
-  schedule: "0/30 * * * *"
+  schedule: "0/1 * * * *"
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 30 # must start in x seconds
   jobTemplate:
