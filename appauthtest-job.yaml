@@ -1,0 +1,27 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: appauthtest-cronjob
+  labels:
+    app: appauthtest
+spec:
+  schedule: "0/30 * * * *"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 30 # must start in x seconds
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 7200
+      activeDeadlineSeconds: 1750 # must complete in x seconds
+      template:
+        spec:
+          containers:
+          - name: appauthtest
+            image: kwaazaar/appauthtest:latest#
+            env:
+            - name: ApplicationInsights__InstrumentationKey
+              value: #{ApplicationInsights.InstrumentationKey}#
+            - name: AppAuthTester__Resource
+              value: #{AppAuthTester.Resource}#
+            - name: AppAuthTester__ClientCredentialsConnString
+              value: #{AppAuthTester.ClientCredentialsConnString}#
+          restartPolicy: Never # Next run will (may) fix it

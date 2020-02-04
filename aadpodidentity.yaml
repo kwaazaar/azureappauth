@@ -1,0 +1,8 @@
+apiVersion: "aadpodidentity.k8s.io/v1"
+kind: AzureIdentity
+metadata:
+  name: testrobert
+spec:
+  type: 0
+  ResourceID: /subscriptions/7b520150-0df3-4adb-83b7-5646c7c62fef/resourcegroups/aks-ot-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testrobert
+  ClientID: 8ee62c99-90f1-47ee-99e3-cb36d06637f0
