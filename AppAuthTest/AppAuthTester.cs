@@ -26,15 +26,15 @@ namespace AppAuthTest
 
             try
             {
-                if (await TryGetToken(cancellationToken, _config.Resource, _config.AzureCliConnString))
+                if (!String.IsNullOrWhiteSpace(_config.AzureCliConnString) && await TryGetToken(cancellationToken, _config.Resource, _config.AzureCliConnString))
                 {
                     _logger.LogInformation("Successfully obtained an accesstoken using AzureCLI");
                 }
-                if (await TryGetToken(cancellationToken, _config.Resource, _config.ClientCredentialsConnString))
+                if (!String.IsNullOrWhiteSpace(_config.ClientCredentialsConnString) && await TryGetToken(cancellationToken, _config.Resource, _config.ClientCredentialsConnString))
                 {
                     _logger.LogInformation("Successfully obtained an accesstoken using client credentials");
                 }
-                if (await TryGetToken(cancellationToken, _config.Resource, _config.MSIConnString))
+                if (!String.IsNullOrWhiteSpace(_config.MSIConnString) && await TryGetToken(cancellationToken, _config.Resource, _config.MSIConnString))
                 {
                     _logger.LogInformation("Successfully obtained an accesstoken using Managed Service Identity");
                 }
