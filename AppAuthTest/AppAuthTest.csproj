@@ -20,7 +20,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
-    <PackageReference Include="AAH.Shared.ApplicationInsights.AspNetCore" Version="7.97.0.7" />
   </ItemGroup>
 
   <ItemGroup>

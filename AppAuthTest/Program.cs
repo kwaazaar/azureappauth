@@ -51,8 +51,8 @@ namespace AppAuthTest
 
         private static void AddApplicationInsights(IServiceCollection services, IConfiguration config)
         {
-            services.AddTeamNameToTelemetry("B");
-            services.AddCloudRoleNameToTelemetry("AppAuthTest");
+            //services.AddTeamNameToTelemetry("B");
+            //services.AddCloudRoleNameToTelemetry("AppAuthTest");
             services.AddSingleton<TelemetryClient>();
             services.AddApplicationInsightsKubernetesEnricher();
             services.AddSingleton<ITelemetryModule, DiagnosticsTelemetryModule>();
