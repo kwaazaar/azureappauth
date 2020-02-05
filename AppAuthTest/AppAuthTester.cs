@@ -64,28 +64,33 @@ namespace AppAuthTest
             try
             {
                 var authResult = await provider.GetAuthenticationResultAsync(resource, cancellationToken: cancellationToken);
-                _logger.LogInformation("Successfully obtained accesstoken for connString {connString}", connString);
-                _logger.LogInformation("Accesstoken: " + authResult.AccessToken);
-                if (!String.IsNullOrWhiteSpace(testUrlGet))
+                if (authResult != null)
                 {
-                    using (var httpClient = new HttpClient())
+                    _logger.LogInformation("Successfully obtained accesstoken for connString {connString}", connString);
+                    _logger.LogInformation("Accesstoken: " + authResult.AccessToken);
+                    if (!String.IsNullOrWhiteSpace(testUrlGet))
                     {
-                        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authResult.TokenType, authResult.AccessToken);
-                        using (var response = await httpClient.GetAsync(testUrlGet, cancellationToken))
+                        using (var httpClient = new HttpClient())
                         {
-                            var responseContent = await response.Content?.ReadAsStringAsync();
-                            if (!response.IsSuccessStatusCode)
+                            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authResult.TokenType, authResult.AccessToken);
+                            using (var response = await httpClient.GetAsync(testUrlGet, cancellationToken))
                             {
-                                _logger.LogError("Failed to invoke test url. Statuscode: {statusCode}, message: {message}", response.StatusCode, responseContent);
-                            }
-                            else
-                            {
-                                _logger.LogInformation("Successfully invoked test url. Statuscode: {statusCode}, message: {message}", response.StatusCode, responseContent);
+                                var responseContent = await response.Content?.ReadAsStringAsync();
+                                if (!response.IsSuccessStatusCode)
+                                {
+                                    _logger.LogError("Failed to invoke test url. Statuscode: {statusCode}, message: {message}", response.StatusCode, responseContent);
+                                }
+                                else
+                                {
+                                    _logger.LogInformation("Successfully invoked test url. Statuscode: {statusCode}, message: {message}", response.StatusCode, responseContent);
+                                }
                             }
                         }
                     }
+                    return true;
                 }
-                return true;
+                _logger.LogError("Failed to get accesstoken for {resource} using connectionstring '{connString}': no result", resource, connString);
+                return false;
             }
             catch (AzureServiceTokenProviderException ex)
             {
