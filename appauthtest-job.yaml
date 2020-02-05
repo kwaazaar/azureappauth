@@ -11,22 +11,14 @@ spec:
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 7200
-      activeDeadlineSeconds: 1750 # must complete in x seconds
+      activeDeadlineSeconds: 600 # must complete in x seconds
       template:
         metadata:
           labels:
             app: appauthtest
-            aadpodidbinding: appauthtest
+            aadpodidbinding: appauthtest # reference to aapodidentitybinding
         spec:
           containers:
           - name: appauthtest
             image: kwaazaar/appauthtest:latest
-            env:
-            - name: ApplicationInsights__InstrumentationKey
-              value: #{ApplicationInsights.InstrumentationKey}#
-            - name: AppAuthTester__Resource
-              value: #{AppAuthTester.Resource}#
-            # Skip
-            #- name: AppAuthTester__ClientCredentialsConnString
-            #  value: #{AppAuthTester.ClientCredentialsConnString}#
-          restartPolicy: Never # Next run will (may) fix it
+          restartPolicy: Never
