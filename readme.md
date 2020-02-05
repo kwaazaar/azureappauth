@@ -4,3 +4,4 @@ Follow steps: https://github.com/Azure/aad-pod-identity
    Resourcegroep van AKS, dan heeft AKS service principal al genoeg rechten.
    Andere resourcegroep, dan stap 6: https://github.com/Azure/aad-pod-identity#6-set-permissions-for-mic
 2. Toekennen aan resource (Reader/Contributor volstaat meestal)
+3. Sommige resources vereisen meer. Bv KeyVault: access policy toevoegen voor identity

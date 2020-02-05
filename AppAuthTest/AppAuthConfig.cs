@@ -10,5 +10,6 @@ namespace AppAuthTest
         public string AzureCliConnString { get; set; }
         public string ClientCredentialsConnString { get; set; }
         public string MSIConnString { get; set; }
+        public string TestUrlGet { get; set; }
     }
 }
