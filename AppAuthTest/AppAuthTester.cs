@@ -89,7 +89,7 @@ namespace AppAuthTest
                     }
                     return true;
                 }
-                _logger.LogError("Failed to get accesstoken for {resource} using connectionstring '{connString}': no result", resource, connString);)
+                _logger.LogError("Failed to get accesstoken for {resource} using connectionstring '{connString}': no result", resource, connString);
                 return false;
             }
             catch (AzureServiceTokenProviderException ex)
