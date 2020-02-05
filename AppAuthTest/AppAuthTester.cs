@@ -48,7 +48,6 @@ namespace AppAuthTest
                         }
                     }
                 }
-                _logger.LogError("Failed to get accesstoken: no result");
             }
             catch (AzureServiceTokenProviderException ex)
             {
