@@ -6,6 +6,7 @@ namespace AppAuthTest
 {
     class AppAuthConfig
     {
+        public string TenantId { get; set; }
         public string Resource { get; set; }
         public string AzureCliConnString { get; set; }
         public string ClientCredentialsConnString { get; set; }

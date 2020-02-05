@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using System;
 using System.Threading.Tasks;
 
@@ -38,7 +39,10 @@ namespace AppAuthTest
                     var config = hostContext.Configuration;
                     builder.AddConfiguration(config.GetSection("Logging"));
                     builder.AddApplicationInsights(config["ApplicationInsights:InstrumentationKey"]);
-                    builder.AddConsole();
+                    builder.AddConsole(c =>
+                    {
+                        c.TimestampFormat = "yyyy-MM-ddTHH:mm:ss.fff ";
+                    });
                 });
 
             try

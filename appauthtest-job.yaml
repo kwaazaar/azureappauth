@@ -26,6 +26,7 @@ spec:
               value: #{ApplicationInsights.InstrumentationKey}#
             - name: AppAuthTester__Resource
               value: #{AppAuthTester.Resource}#
-            - name: AppAuthTester__ClientCredentialsConnString
-              value: #{AppAuthTester.ClientCredentialsConnString}#
+            # Skip
+            #- name: AppAuthTester__ClientCredentialsConnString
+            #  value: #{AppAuthTester.ClientCredentialsConnString}#
           restartPolicy: Never # Next run will (may) fix it
