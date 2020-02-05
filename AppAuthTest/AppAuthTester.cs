@@ -72,7 +72,7 @@ namespace AppAuthTest
                     {
                         using (var httpClient = new HttpClient())
                         {
-                            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authResult.TokenType, authResult.AccessToken);
+                            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authResult.TokenType ?? "Bearer", authResult.AccessToken);
                             using (var response = await httpClient.GetAsync(testUrlGet, cancellationToken))
                             {
                                 var responseContent = await response.Content?.ReadAsStringAsync();
@@ -89,7 +89,7 @@ namespace AppAuthTest
                     }
                     return true;
                 }
-                _logger.LogError("Failed to get accesstoken for {resource} using connectionstring '{connString}': no result", resource, connString);
+                _logger.LogError("Failed to get accesstoken for {resource} using connectionstring '{connString}': no result", resource, connString);)
                 return false;
             }
             catch (AzureServiceTokenProviderException ex)
