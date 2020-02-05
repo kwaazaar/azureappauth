@@ -62,11 +62,15 @@ namespace AppAuthTest
             try
             {
                 var token = await provider.GetAccessTokenAsync(resource, cancellationToken: cancellationToken);
+                _logger.LogInformation("Successfully obtained accesstoken for connString {connString}", connString);
+                _logger.LogInformation("Accesstoken: " + token);
+                var principal = provider.PrincipalUsed;
+                _logger.LogInformation("Principal: ", principal);
                 return true;
             }
             catch (AzureServiceTokenProviderException ex)
             {
-                _logger.LogError(ex, "Failed to get token using connectionstring '{connString}': {message}", connString, ex.Message);
+                _logger.LogError(ex, "Failed to get accesstoken for {resource} using connectionstring '{connString}': {message}", resource, connString, ex.Message);
                 return false;
             }
         }
