@@ -28,6 +28,7 @@ namespace AppAuthTest
 
             try
             {
+                _logger.LogInformation("Requesting accesstoken...");
                 var authResult = await provider.GetAuthenticationResultAsync(_config.Resource, tenantId: _config.TenantId, cancellationToken: cancellationToken);
                 if (authResult != null)
                 {
