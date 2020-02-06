@@ -52,6 +52,7 @@ namespace AppAuthTest
             catch (AzureServiceTokenProviderException ex)
             {
                 _logger.LogError(ex, "Failed to get accesstoken: {message}", ex.Message);
+                throw;
             }
             catch (Exception ex)
             {
