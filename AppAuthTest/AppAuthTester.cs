@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Data.SqlClient;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -33,6 +34,7 @@ namespace AppAuthTest
                 if (authResult != null)
                 {
                     _logger.LogInformation("Accesstoken: " + authResult.AccessToken);
+
                     if (!String.IsNullOrWhiteSpace(_config.TestUrlGet))
                     {
                         using var httpClient = new HttpClient();
@@ -46,6 +48,29 @@ namespace AppAuthTest
                         else
                         {
                             _logger.LogInformation("Successfully invoked test url. Statuscode: {statusCode}, message: {message}", response.StatusCode, responseContent);
+                        }
+                    }
+
+                    if (_config.TestDb != null && !String.IsNullOrEmpty(_config.TestDb.ConnectionString))
+                    {
+                        using var conn = new SqlConnection(_config.TestDb.ConnectionString);
+                        conn.AccessToken = authResult.AccessToken;
+
+                        try
+                        {
+                            conn.Open();
+                            _logger.LogInformation("Successfully opened the database.");
+                            if (!String.IsNullOrWhiteSpace(_config.TestDb.Query))
+                            {
+                                var cmd = conn.CreateCommand();
+                                cmd.CommandText = _config.TestDb.Query;
+                                using var dataReader = cmd.ExecuteReader(System.Data.CommandBehavior.SingleRow);
+                                _logger.LogInformation("Successfully executed query. Columns returned: {colCount}, rows returned: {rowsReturned}", dataReader.VisibleFieldCount, dataReader.HasRows);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Failed to open or query the database. Message: {message}", ex);
                         }
                     }
                 }
