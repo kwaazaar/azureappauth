@@ -2,6 +2,8 @@ apiVersion: "aadpodidentity.k8s.io/v1"
 kind: AzureIdentity
 metadata:
   name: testrobert
+  annotations:
+    aadpodidentity.k8s.io/Behavior: namespaced
 spec:
   type: 0
   ResourceID: /subscriptions/7b520150-0df3-4adb-83b7-5646c7c62fef/resourcegroups/MC_aks-ot-rg_aahnl-kubernetes-ot_westeurope/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testrobert

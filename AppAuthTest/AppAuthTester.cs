@@ -38,6 +38,7 @@ namespace AppAuthTest
                     if (!String.IsNullOrWhiteSpace(_config.TestUrlGet))
                     {
                         using var httpClient = new HttpClient();
+                        httpClient.Timeout = TimeSpan.FromMinutes(3); // Wait up to 3 minutes to get a token (no retries)
                         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authResult.TokenType ?? "Bearer", authResult.AccessToken);
                         using var response = await httpClient.GetAsync(_config.TestUrlGet, cancellationToken);
                         var responseContent = await response.Content?.ReadAsStringAsync();
