@@ -21,4 +21,11 @@ spec:
           containers:
           - name: appauthtest
             image: kwaazaar/appauthtest:latest
+            env:
+            - name: AppAuthTester__TestUrlGet
+              value: "#{TestUrlGet}#"
+            - name: AppAuthTester__TestDb__ConnectionString
+              value: "#{TestDbConnectionString}#"
+            - name: AppAuthTester__TestDb__Query
+              value: "#{TestDbQuery}#"
           restartPolicy: Never
