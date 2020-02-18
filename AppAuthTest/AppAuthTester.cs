@@ -54,6 +54,13 @@ namespace AppAuthTest
 
                     if (_config.TestDb != null && !String.IsNullOrEmpty(_config.TestDb.ConnectionString))
                     {
+                        if (_config.Resource != "https://database.windows.net/")
+                        {
+                            // We need a token for the SqlAzure resource
+                            authResult = await provider.GetAuthenticationResultAsync("https://database.windows.net/", tenantId: _config.TenantId, cancellationToken: cancellationToken);
+                            _logger.LogInformation("Accesstoken for SqlAzure: " + authResult.AccessToken);
+                        }
+
                         using var conn = new SqlConnection(_config.TestDb.ConnectionString);
                         conn.AccessToken = authResult.AccessToken;
 
