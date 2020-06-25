@@ -1,31 +1,26 @@
-apiVersion: batch/v1beta1
-kind: CronJob
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: appauthtest-cronjob
+  name: appauthtest
   labels:
     app: appauthtest
 spec:
-  schedule: "0/1 * * * *"
-  concurrencyPolicy: Forbid
-  startingDeadlineSeconds: 30 # must start in x seconds
-  jobTemplate:
+  ttlSecondsAfterFinished: 7200
+  activeDeadlineSeconds: 600 # must complete in x seconds
+  template:
+    metadata:
+      labels:
+        app: appauthtest
+        aadpodidbinding: my-id # reference to AzureIdentityBinding
     spec:
-      ttlSecondsAfterFinished: 7200
-      activeDeadlineSeconds: 600 # must complete in x seconds
-      template:
-        metadata:
-          labels:
-            app: appauthtest
-            aadpodidbinding: appauthtest # reference to aapodidentitybinding
-        spec:
-          containers:
-          - name: appauthtest
-            image: kwaazaar/appauthtest:latest
-            env:
-            - name: AppAuthTester__TestUrlGet
-              value: "#{TestUrlGet}#"
-            - name: AppAuthTester__TestDb__ConnectionString
-              value: "#{TestDbConnectionString}#"
-            - name: AppAuthTester__TestDb__Query
-              value: "#{TestDbQuery}#"
-          restartPolicy: Never
+      containers:
+      - name: appauthtest
+        image: kwaazaar/appauthtest:latest
+        #env:
+        #- name: AppAuthTester__TestUrlGet
+        #  value: "https://aahnl-keyvault-ot-kv.vault.azure.net/secrets/heptio-ark/7e4d4ca44a3f4b1da8d83c69b66b78f1"
+        #- name: AppAuthTester__TestDb__ConnectionString
+        #  value: "#{TestDbConnectionString}#"
+        #- name: AppAuthTester__TestDb__Query
+        #  value: "#{TestDbQuery}#"
+      restartPolicy: OnFailure # Keep restarting, easy while fixing the problem
